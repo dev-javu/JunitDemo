@@ -15,13 +15,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                // Construye tu proyecto Java utilizando Gradle
-                sh './gradlew clean build'
-            }
-        }
-
         stage('Print SonarCloud Variable') {
             steps {
                 script {
@@ -31,6 +24,13 @@ pipeline {
                     }
                     echo "Valor de la variable del entorno SonarCloud: ${sonarCloudEnv.SONAR_TOKEN}"
                 }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Construye tu proyecto Java utilizando Gradle
+                sh './gradlew clean build'
             }
         }
 
