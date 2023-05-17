@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SONAR_HOST_URL = "https://sonarcloud.io"
-        SONAR_TOKEN = credentials('233b4df0667171194f7382fc37bc0b9ea2b7780f')
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
     }
 
     stages {
