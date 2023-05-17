@@ -15,18 +15,6 @@ pipeline {
             }
         }
 
-        stage('Print SonarCloud Variable') {
-            steps {
-                script {
-                    def sonarCloudEnv = null
-                    withSonarQubeEnv('SonarCloud') {
-                        sonarCloudEnv = env
-                    }
-                    echo "Valor de la variable del entorno SonarCloud: ${sonarCloudEnv.SONAR_TOKEN}"
-                }
-            }
-        }
-
         stage('Build') {
             steps {
                 // Construye tu proyecto Java utilizando Gradle
