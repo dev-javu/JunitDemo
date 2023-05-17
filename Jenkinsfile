@@ -22,6 +22,18 @@ pipeline {
             }
         }
 
+        stage('Print SonarCloud Variable') {
+            steps {
+                script {
+                    def sonarCloudEnv = null
+                    withSonarQubeEnv('SonarCloud') {
+                        sonarCloudEnv = env
+                    }
+                    echo "Valor de la variable del entorno SonarCloud: ${sonarCloudEnv.SONAR_TOKEN}"
+                }
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
                 // Realiza el análisis del proyecto con SonarQube Scanner
