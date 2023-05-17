@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        SONAR_HOST_URL = "https://sonarcloud.io"
         SONAR_TOKEN = credentials('SONAR_TOKEN')
     }
 
@@ -17,7 +16,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Construye tu proyecto Java utilizando Gradle
+                // Construye tu proyecto Spring Boot utilizando Gradle
                 sh './gradlew clean build'
             }
         }
@@ -27,7 +26,17 @@ pipeline {
                 // Realiza el análisis del proyecto con SonarQube Scanner
                 // Asegúrate de tener instalado el plugin SonarQube Scanner en Jenkins
                 withSonarQubeEnv('SonarCloud') {
-                    sh './gradlew sonar'
+                    // Configura las propiedades específicas de SonarQube para el proyecto
+                    // Puedes personalizarlas según tus necesidades
+                    def sonarqubeProperties = [
+                        '-Dsonar.projectKey=walgomwizeline_JunitDemo',
+                        '-Dsonar.organization=walgomwizeline',
+                        '-Dsonar.sources=src/main',
+                        '-Dsonar.tests=src/test',
+                        '-Dsonar.java.binaries=build/classes/java/main',
+                        '-Dsonar.java.test.binaries=build/classes/java/test'
+                    ]
+                    sh "./gradlew sonarqube ${sonarqubeProperties.join(' ')}"
                 }
             }
         }
